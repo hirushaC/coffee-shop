@@ -9,26 +9,22 @@ import {
   DropdownMenuTrigger,
 } from "@components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const navigate = useNavigate();
 
   const handleLogOut = () => {
     localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("clickCounts");
-    navigate("/sign-in");
+    localStorage.removeItem("currentUserName");
+    localStorage.removeItem("currentUserEmail");
+    localStorage.removeItem("currentUserId");
+    navigate("/log-in");
   };
 
   return (
     <>
-      <Link
-        to={"/sign-in"}
-        className="flex flex-row items-center justify-center gap-2 text-white"
-      >
-        <p>Profile Name</p>
-      </Link>
-
+      <p>{localStorage.getItem("currentUserName")}</p>
       <DropdownMenu className="select-auto z-f30">
         <DropdownMenuTrigger asChild>
           <Button variant="link" className="h-8 w-8 p-0">
@@ -42,6 +38,9 @@ const Profile = () => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Profile</DropdownMenuLabel>
           <DropdownMenuSeparator />
+          <DropdownMenuItem onSelect={() => navigate("/orders")}>
+            Orders
+          </DropdownMenuItem>
           <DropdownMenuItem onSelect={handleLogOut}>Log Out</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

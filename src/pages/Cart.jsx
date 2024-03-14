@@ -1,8 +1,14 @@
 import CartTable from "@components/CartPage/CartTable";
 import Payment from "@components/CartPage/Payment";
 import PaymentForm from "@components/CartPage/PaymentForm";
+import useCatalouge from "../api/hooks/useCatalouge";
+import { useContext } from "react";
+import { CartContext } from "../shared/CartContext.jsx";
 
 const Cart = () => {
+  const { coffees } = useCatalouge();
+  const { cartItems, addToCart, removeFromCart } = useContext(CartContext);
+
   return (
     <section>
       <div className="relative">
@@ -16,11 +22,16 @@ const Cart = () => {
                 </h3>
               </div>
 
-              <CartTable />
+              <CartTable
+                coffees={coffees}
+                cartItems={cartItems}
+                addToCart={addToCart}
+                removeFromCart={removeFromCart}
+              />
               <Payment />
             </div>
             <div className="my-5 shadow rounded-lg bg-white">
-              <PaymentForm />
+              <PaymentForm coffees={coffees} cartItems={cartItems} />
             </div>
           </div>
         </div>
